@@ -25,6 +25,7 @@ defaults:
 build_stages: 
 - name: set_python_version
   after: prologue
+  before: configure
   handler: bash
   bash: |
     export PYVER={{pyver}}
