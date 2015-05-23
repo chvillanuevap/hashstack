@@ -22,7 +22,6 @@ build_stages:
 
 - name: setup_dirs
   after: prologue
-  before: setup_builddir
   handler: bash
   bash: |
     export PYTHONPATH=${ARTIFACT}/{{python_site_packages_rel}}:$PYTHONPATH
@@ -31,7 +30,6 @@ build_stages:
 - name: glx_glext_legacy_patch
   files: [GLX_GLEXT_LEGACY.patch]
   handler: bash
-  before: setup_builddir
   bash: |
     patch -p1 < _hashdist/GLX_GLEXT_LEGACY.patch
 
@@ -39,7 +37,6 @@ build_stages:
   files: [vtk-5.10.1-cygwin.patch]
   name: vtk_cygwin_patch
   handler: bash
-  before: setup_builddir
   bash: |
     patch -p1 < _hashdist/vtk-5.10.1-cygwin.patch
 
@@ -47,7 +44,6 @@ build_stages:
   files: [vtk-disable-gc.patch]
   name: vtk_disable_gc_patch
   handler: bash
-  before: setup_builddir
   bash: |
     patch -p1 < _hashdist/vtk-disable-gc.patch
 

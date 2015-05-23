@@ -23,7 +23,6 @@ build_stages:
 
 - name: switch_dir
   after: prologue
-  before: setup_builddir
   handler: bash
   bash: |
     cd exodus

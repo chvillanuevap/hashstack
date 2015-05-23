@@ -1,3 +1,4 @@
+
 extends: [cmake_package]
 dependencies:
   build: [python, cython, numpy]
@@ -17,6 +18,3 @@ build_stages:
           '-D PYTHON_INSTALL_PATH:PATH=$ARTIFACT/{{python_site_packages_rel}}']
   build_in_source: true
 
-- name: setup_builddir
-  mode: override
-  bash: |
