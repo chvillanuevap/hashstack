@@ -8,11 +8,6 @@ sources:
   url: http://sourceforge.net/projects/arma/files/armadillo-5.100.2.tar.gz
 
 build_stages:
-  - name: setup_builddir
-    after: prologue
-    mode: replace
-    handler: bash
-    bash: |
 
   - name: configure
-    build_in_source: true
+    build_in_source: false

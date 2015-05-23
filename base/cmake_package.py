@@ -51,9 +51,14 @@ def configure(ctx, stage_args):
     if 'extra' in stage_args:
         conf_lines.append(' '.join('%s' % arg for arg in stage_args['extra']))
 
+    #set in-source or out-of-source build
+    setup_lines = []
+    mkdirbuild = 'mkdir -p _build && cd _build'
     builddir = stage_args.get('builddir', '..')
     if stage_args.get('build_in_source', False):
+	mkdirbuild = ''
         builddir = '.'
+    setup_lines.append(mkdirbuild)
     conf_lines.append(builddir)
 
     for i in range(len(conf_lines) - 1):
@@ -65,4 +70,4 @@ def configure(ctx, stage_args):
         env_lines.append('export CPPFLAGS="%s"' % ' '.join(CPPFLAGS))
         env_lines.append('export LDFLAGS="%s"' % ' '.join(LDFLAGS))
 
-    return ['('] + env_lines + conf_lines + [')']
+    return setup_lines + ['('] + env_lines + conf_lines + [')']
