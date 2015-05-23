@@ -10,4 +10,4 @@ sources:
 build_stages:
 
   - name: configure
-    build_in_source: false
+    build_in_source: true
