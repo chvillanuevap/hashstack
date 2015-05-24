@@ -16,6 +16,7 @@ def configure(ctx, stage_args):
         - name: configure
           build_type: Release
           set_env_flags: true
+          build_in_source: false
 
     Note: this is a fairly sophisticated build stage that inspects
     the build artifacts available to decide what to enable in DOLFIN.
@@ -114,9 +115,14 @@ def configure(ctx, stage_args):
         else:
             conf_lines.append('-D DOLFIN_ENABLE_%s:BOOL=OFF' % dep)
 
-    builddir = '..'
+    # Set in-source or out-of-source build
+    setup_lines = []
+    mkdirbuild = 'mkdir -p _build && cd _build'
+    builddir = stage_args.get('builddir', '..')
     if stage_args.get('build_in_source', False):
+        mkdirbuild = ''
         builddir = '.'
+    setup_lines.append(mkdirbuild)
     conf_lines.append(builddir)
 
     for i in range(len(conf_lines) - 1):
@@ -128,4 +134,4 @@ def configure(ctx, stage_args):
         env_lines.append('export CPPFLAGS="%s"' % ' '.join(CPPFLAGS))
         env_lines.append('export LDFLAGS="%s"' % ' '.join(LDFLAGS))
 
-    return ['('] + env_lines + conf_lines + [')']
+    return setup_lines + ['('] + env_lines + conf_lines + [')']
